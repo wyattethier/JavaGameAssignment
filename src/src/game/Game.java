@@ -55,6 +55,9 @@ public class Game extends JPanel implements ActionListener {
     private String message;
     private int currentWeek;
     private int currentPart; // Which part of the week (1=A, 2=B, etc.)
+    private int timeBonus;
+    private double comboMultiplier;
+    private int frameCounter;
 
     // Constants
     private static final int TARGET_FPS = 60;
@@ -102,6 +105,10 @@ public class Game extends JPanel implements ActionListener {
      * Initialize or reset the game.
      */
     private void initGame() {
+        // Sync week from config (in case student changed it)
+        currentWeek = config.currentWeek;
+        currentPart = 1;
+
         // Create player at starting position
         player = new Player(config.playerStartX, config.playerStartY, config);
 
@@ -113,6 +120,19 @@ public class Game extends JPanel implements ActionListener {
         state = GameState.PLAYING;
         score = 0;
         message = "";
+        timeBonus = 100;
+        comboMultiplier = 1.0;
+        frameCounter = 0;
+
+        // Week 11 special setup
+        if (currentWeek == 11) {
+            config.configurePlayer(player);
+        }
+
+        // Week 14 special setup
+        if (currentWeek == 14) {
+            level.setupWeek14Enemies(player);
+        }
     }
 
     /**
@@ -172,14 +192,36 @@ public class Game extends JPanel implements ActionListener {
         // Update level (enemies, wall, etc.)
         level.update();
 
+        // Update time bonus
+        frameCounter++;
+        if (frameCounter % 60 == 0 && timeBonus > 0) {
+            timeBonus--;
+        }
+
+        // Update score using student's formula
+        score = config.calculateScore(player.getCoins(), timeBonus, comboMultiplier);
+
         // Update Week 4 goal status based on student code
         if (currentWeek == 4 && level.getButton() != null) {
             boolean fixed = config.isGoalFixed(level.getButton().getClickCount());
             level.setGoalEnabled(fixed);
         }
 
+        // Week 6: Jump Pad interaction
+        // (Handled in collision check)
+
+        // Week 7: Scoring Door interaction
+        // (Handled in collision check)
+
         // Check player-enemy collisions
         checkEnemyCollisions();
+
+        // Check if player has fallen into the void
+        if (player.getY() > config.windowHeight) {
+            player.takeDamage(player.getHealth());
+            state = GameState.GAME_OVER;
+            message = "You fell into the void!";
+        }
 
         // Check if player is caught by encroaching wall
         if (level.isPlayerCaughtByWall(player.getX(), player.getWidth())) {
@@ -190,8 +232,6 @@ public class Game extends JPanel implements ActionListener {
 
         // Check win condition
         if (level.isAtGoal(player.getX(), player.getY(), player.getWidth(), player.getHeight())) {
-            score += player.getCoins() * 10;
-
             // Check if there's a next part to this week
             int nextPart = level.getNextPart();
             if (nextPart > 0) {
@@ -223,6 +263,23 @@ public class Game extends JPanel implements ActionListener {
         if (input.isKeyJustPressed(java.awt.event.KeyEvent.VK_R)) {
             initGame();
         }
+
+        // specialized entity collisions
+        checkSpecialCollisions();
+    }
+
+    /**
+     * Check collisions with new specialized entities.
+     */
+    private void checkSpecialCollisions() {
+        String result = level.checkCollisions(player, timeBonus, comboMultiplier);
+        if (result != null) {
+            if (result.equals("DAMAGED")) {
+                // message = "Ouch! Watch out for traps!";
+            } else if (result.startsWith("POWERUP")) {
+                score += 50;
+            }
+        }
     }
 
     /**
@@ -246,7 +303,8 @@ public class Game extends JPanel implements ActionListener {
 
                 // Add score if enemy was killed
                 if (!enemy.isAlive()) {
-                    score += 100;
+                    comboMultiplier += 0.1;
+                    // Note: Base score updated by config.calculateScore in updatePlaying()
                 }
             }
         }
@@ -350,6 +408,9 @@ public class Game extends JPanel implements ActionListener {
         // Draw player
         player.draw(g);
 
+        // Draw special entities that need player state
+        level.drawSpecial(g, player, timeBonus, comboMultiplier);
+
         // Draw UI
         drawUI(g);
     }
@@ -398,8 +459,8 @@ public class Game extends JPanel implements ActionListener {
         // Current physics values (helpful for Week 3!)
         g.setFont(new Font("Courier New", Font.PLAIN, 11));
         g.setColor(new Color(80, 80, 80));
-        g.drawString("jumpStrength: " + config.jumpStrength, config.windowWidth - 150, 50);
-        g.drawString("moveSpeed: " + config.moveSpeed, config.windowWidth - 150, 65);
+        g.drawString("jumpStrength: " + config.calculateJumpHeight(1.0), config.windowWidth - 150, 50);
+        g.drawString("moveSpeed: " + config.determineMoveSpeed(), config.windowWidth - 150, 65);
         g.drawString("gravity: " + config.gravity, config.windowWidth - 150, 80);
 
         // Controls hint

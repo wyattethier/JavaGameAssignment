@@ -30,6 +30,26 @@ public class LevelData implements Constants {
                 }
             case 4:
                 return getWeek4_IfStatementChallenge();
+            case 5:
+                return getWeek5_LoopChallenge();
+            case 6:
+                return getWeek6_PowerSurge();
+            case 7:
+                return getWeek7_TheCalculator();
+            case 8:
+                return getWeek8_ArrayBasics();
+            case 9:
+                return getWeek9_ArrayIteration();
+            case 10:
+                return getWeek10_IOLoader();
+            case 11:
+                return getWeek11_ObjectExploring();
+            case 12:
+                return getWeek12_ObjectCreating();
+            case 13:
+                return getWeek13_OOPDesign();
+            case 14:
+                return getWeek14_Inheritance();
             default:
                 return getWeek3A_JumpChallenge(); // Default
         }
@@ -224,6 +244,249 @@ public class LevelData implements Constants {
     }
 
     /**
+     * Week 5: "Build the Bridge" - Loops (for)
+     */
+    private static LevelConfig getWeek5_LoopChallenge() {
+        LevelConfig config = new LevelConfig();
+        config.name = "Week 5: The Infinite Void";
+        config.weekNumber = 5;
+        config.topic = "For-Loops";
+        config.hint = "Hint: The gap is too wide! Write a for-loop in GameConfig.java to build the bridge.";
+
+        config.platformX = new int[] { 0, 650 };
+        config.platformY = new int[] { 500, 500 };
+        config.platformWidths = new int[] { 150, 150 };
+
+        config.hasBridge = true;
+        config.bridgeStartX = 150;
+        config.bridgeY = 500;
+        config.bridgeTileWidth = 100;
+        config.hasFloor = false;
+
+        config.goalX = 720;
+        config.goalY = 425;
+
+        return config;
+    }
+
+    /**
+     * Week 6: "Power Surge" - Methods (Calling)
+     */
+    private static LevelConfig getWeek6_PowerSurge() {
+        LevelConfig config = new LevelConfig();
+        config.name = "Week 6: Power Surge";
+        config.weekNumber = 6;
+        config.topic = "Calling Methods";
+        config.hint = "Hint: Collect 3 coins to activate the jump pad, then fix its boost!";
+
+        config.platformX = new int[] { 0, 550 };
+        config.platformY = new int[] { 500, 500 };
+        config.platformWidths = new int[] { 360, 250 };
+
+        config.enemyX = new int[] { 450 };
+        config.enemyY = new int[] { 300 };
+
+        config.coinX = new int[] { 30, 100, 170 };
+        config.coinY = new int[] { 450, 450, 450 };
+
+        // Gap is ~400px wide. Normal jump covers ~144px vertical.
+        // We need a massive boost.
+        config.hasJumpPad = true;
+        config.jumpPadX = 300;
+        config.jumpPadY = 480;
+
+        config.hasFloor = false;
+        config.goalX = 720;
+        config.goalY = 425;
+
+        return config;
+    }
+
+    /**
+     * Week 7: "The Calculator" - Methods (Writing)
+     */
+    private static LevelConfig getWeek7_TheCalculator() {
+        LevelConfig config = new LevelConfig();
+        config.name = "Week 7: The Calculator";
+        config.weekNumber = 7;
+        config.topic = "Writing Methods";
+        config.hint = "Hint: Fix the score formula to reach 500 points and open the door!";
+
+        config.platformX = new int[] { 50, 250, 450, 650 };
+        config.platformY = new int[] { 480, 400, 320, 240 };
+        config.platformWidths = new int[] { 120, 120, 120, 120 };
+
+        config.hasTrap = true; // Added trap to give student something to calculate damage for
+        config.trapX = 260;
+        config.trapY = 380;
+        config.trapWidth = 100;
+
+        config.coinX = new int[] { 100, 200, 300, 425, 600 };
+        config.coinY = new int[] { 450, 350, 250, 500, 170 };
+
+        config.hasScoringDoor = true;
+        config.scoringDoorX = 680;
+        config.scoringDoorY = 100;
+
+        config.goalX = 720;
+        config.goalY = 100;
+
+        return config;
+    }
+
+    /**
+     * Week 8: "Platform Architect" - Arrays (Basics)
+     */
+    private static LevelConfig getWeek8_ArrayBasics() {
+        LevelConfig config = new LevelConfig();
+        config.name = "Week 8: Platform Architect";
+        config.weekNumber = 8;
+        config.topic = "Array Basics";
+        config.hint = "Hint: Use the arrays in GameConfig to build a path to the goal!";
+
+        config.useWeek8Data = false; // This level will pull X,Y,Widths from developer/GameConfig arrays
+
+        config.platformX = new int[] { 0, 200, 400, 550, 750 };
+        config.platformY = new int[] { 500, 500, 500, 500, 500 };
+        config.platformWidths = new int[] { 150, 100, 100, 100, 50 };
+        config.platformMoveable = new boolean[] { false, true, true, true, false };
+        config.platformMaxHeights = new int[] { 200, 200, 200, 200, 200 };
+
+        config.goalX = 350;
+        config.goalY = 50;
+
+        return config;
+    }
+
+    /**
+     * Week 9: "Enemy Parade" - Array Iteration
+     */
+    private static LevelConfig getWeek9_ArrayIteration() {
+        LevelConfig config = new LevelConfig();
+        config.name = "Week 9: Enemy Parade";
+        config.weekNumber = 9;
+        config.topic = "Array Iteration";
+        config.hint = "Hint: Use loops to move the enemies out of your way!";
+
+        config.useWeek9Data = true;
+        config.platformX = new int[] { 0, 750 };
+        config.platformY = new int[] { 500, 500 };
+        config.platformWidths = new int[] { 150, 50 };
+        config.hasFloor = false;
+
+        config.goalX = 760;
+        config.goalY = 425;
+
+        return config;
+    }
+
+    /**
+     * Week 10: "Level Loader" - I/O & Exceptions
+     */
+    private static LevelConfig getWeek10_IOLoader() {
+        LevelConfig config = new LevelConfig();
+        config.name = "Week 10: Level Loader";
+        config.weekNumber = 10;
+        config.topic = "I/O & Exceptions";
+        config.hint = "Hint: Implement the level loader to build the world from level10.txt!";
+
+        config.useFileLoading = true;
+        config.levelFileName = "level10.txt";
+        config.hasFloor = false;
+
+        config.goalX = 700;
+        config.goalY = 100;
+
+        return config;
+    }
+
+    /**
+     * Week 11: "Player Inspector" - Objects (Exploring)
+     */
+    private static LevelConfig getWeek11_ObjectExploring() {
+        LevelConfig config = new LevelConfig();
+        config.name = "Week 11: Player Inspector";
+        config.weekNumber = 11;
+        config.topic = "Objects & Classes";
+        config.hint = "Hint: Use getters and setters to pass the purple stat gate!";
+
+        config.platformX = new int[] { 50, 200, 400, 600 };
+        config.platformY = new int[] { 480, 480, 480, 480 };
+        config.platformWidths = new int[] { 100, 100, 100, 150 };
+
+        config.hasStatGate = true;
+        config.statGateX = 420;
+        config.statGateY = 365;
+
+        config.goalX = 650;
+        config.goalY = 405;
+
+        return config;
+    }
+
+    /**
+     * Week 12: "Power-Up Factory" - Objects (Creating)
+     */
+    private static LevelConfig getWeek12_ObjectCreating() {
+        LevelConfig config = new LevelConfig();
+        config.name = "Week 12: Power-Up Factory";
+        config.weekNumber = 12;
+        config.topic = "Creating Classes";
+        config.hint = "Hint: Create the PowerUp class to survive the gauntlet!";
+
+        config.platformX = new int[] { 50, 700 };
+        config.platformY = new int[] { 500, 500 };
+        config.platformWidths = new int[] { 100, 100 };
+
+        // Need powerups to reach the far side
+        config.goalX = 720;
+        config.goalY = 425;
+
+        return config;
+    }
+
+    /**
+     * Week 13: "Encapsulation Challenge" - OOP Design
+     */
+    private static LevelConfig getWeek13_OOPDesign() {
+        LevelConfig config = new LevelConfig();
+        config.name = "Week 13: Encapsulation";
+        config.weekNumber = 13;
+        config.topic = "Encapsulation";
+        config.hint = "Hint: Secure the GameState class to prevent game crashes!";
+
+        config.platformX = new int[] { 50, 300, 550 };
+        config.platformY = new int[] { 480, 400, 320 };
+        config.platformWidths = new int[] { 150, 150, 150 };
+
+        config.goalX = 600;
+        config.goalY = 245;
+
+        return config;
+    }
+
+    /**
+     * Week 14: "Enemy Types" - Inheritance
+     */
+    private static LevelConfig getWeek14_Inheritance() {
+        LevelConfig config = new LevelConfig();
+        config.name = "Week 14: Enemy Evolution";
+        config.weekNumber = 14;
+        config.topic = "Inheritance";
+        config.hint = "Hint: Create Flyer and Charger classes to populate the level!";
+
+        config.platformX = new int[] { 50, 300, 550 };
+        config.platformY = new int[] { 480, 420, 360 };
+        config.platformWidths = new int[] { 150, 150, 150 };
+
+        // We'll spawn the special enemies in Level.java
+        config.goalX = 620;
+        config.goalY = 285;
+
+        return config;
+    }
+
+    /**
      * Inner class holding all configuration for a single level.
      */
     public static class LevelConfig {
@@ -239,10 +502,16 @@ public class LevelData implements Constants {
         public int[] platformX = {};
         public int[] platformY = {};
         public int[] platformWidths = {};
+        public boolean[] platformMoveable = {};
+        public int[] platformMaxHeights = {};
 
         // Enemy positions
         public int[] enemyX = {};
         public int[] enemyY = {};
+
+        // Coin positions (Week 8-9)
+        public int[] coinX = {};
+        public int[] coinY = {};
 
         // Goal position
         public int goalX = 700;
@@ -266,5 +535,43 @@ public class LevelData implements Constants {
         public int buttonWidth = 60;
         public int buttonHeight = 40;
         public int requiredButtonClicks = 0;
+
+        // Bridge (Week 5 mechanic)
+        public boolean hasBridge = false;
+        public int bridgeStartX = 0;
+        public int bridgeY = 0;
+        public int bridgeTileWidth = 80;
+
+        // Ground platform (Week 5: can be disabled)
+        public boolean hasFloor = true;
+
+        // Jump Pad (Week 6)
+        public boolean hasJumpPad = false;
+        public int jumpPadX = 0;
+        public int jumpPadY = 0;
+
+        // Scoring Door (Week 7)
+        public boolean hasScoringDoor = false;
+        public int scoringDoorX = 0;
+        public int scoringDoorY = 0;
+
+        // Trap (Week 7)
+        public boolean hasTrap = false;
+        public int trapX = 0;
+        public int trapY = 0;
+        public int trapWidth = 100;
+
+        // Stat Gate (Week 11)
+        public boolean hasStatGate = false;
+        public int statGateX = 0;
+        public int statGateY = 0;
+
+        // Week 8 & 9 Custom Data
+        public boolean useWeek8Data = false;
+        public boolean useWeek9Data = false;
+
+        // Week 10 File Loading
+        public boolean useFileLoading = false;
+        public String levelFileName = "";
     }
 }
