@@ -33,7 +33,7 @@ public class GameConfig extends BaseSettings {
     // Week 3 = Data Types challenge (jump height + speed escape)
     // Week 4 = Decisions (coming soon)
     // ... more levels coming each week!
-    public int currentWeek = 12;
+    public int currentWeek = 3;
 
     // ╔═══════════════════════════════════════════════════════════════╗
     // ║ SECTION 1: PLAYER PHYSICS (Weeks 2-3: Data Types) ║
@@ -281,7 +281,7 @@ public class GameConfig extends BaseSettings {
      * 
      * Use the code below to create your new enemy:
      * 
-     * public *your Enemy Subclass* createNewEnemy() {
+     * public Enemy createNewEnemy() {
      * return new *your Enemy Subclass*(x, y, patrolLeft, patrolRight);
      * }
      * 
@@ -289,7 +289,7 @@ public class GameConfig extends BaseSettings {
      */
 
     public Enemy createNewEnemy() {
-        return new Enemy(100, 440, 50, 250);
+        return new Enemy(100, 440, 50, 250); // TODO: Replace with your new enemy
     }
 
     // Goal position (where the level ends)

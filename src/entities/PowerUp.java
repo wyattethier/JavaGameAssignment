@@ -11,9 +11,6 @@ import java.awt.Rectangle;
  * Students: You must implement this class!
  */
 public class PowerUp {
-    // TODO: Add fields (type, duration, x, y, collected)
-
-    // TEMPORARY FIELDS for compilation - Students should replace these
     private String type;
     private int x, y;
     private int duration = 300;
