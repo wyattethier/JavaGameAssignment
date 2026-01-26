@@ -331,7 +331,7 @@ public class Level implements Constants {
      */
     public void setupWeek14Enemies(entities.Player player) {
         enemies = new Enemy[3];
-        enemies[0] = new Enemy(100, 440, 50, 250); // Standard
+        enemies[0] = config.createNewEnemy(); // Student's enemy
         enemies[1] = new entities.Flyer(300, 300, 200, 400); // Flyer
         enemies[2] = new entities.Charger(550, 320, 500, 700, player); // Charger
     }
@@ -410,11 +410,18 @@ public class Level implements Constants {
     /**
      * Update all level elements.
      */
-    public void update() {
+    public void update(entities.Player player) {
         // Update enemies
         for (Enemy enemy : enemies) {
             if (enemy != null) {
                 enemy.update();
+            }
+        }
+
+        // Update power-ups
+        if (powerUps != null) {
+            for (PowerUp pu : powerUps) {
+                pu.tick(player);
             }
         }
 

@@ -33,7 +33,7 @@ public class GameConfig extends BaseSettings {
     // Week 3 = Data Types challenge (jump height + speed escape)
     // Week 4 = Decisions (coming soon)
     // ... more levels coming each week!
-    public int currentWeek = 12;
+    public int currentWeek = 3;
 
     // ╔═══════════════════════════════════════════════════════════════╗
     // ║ SECTION 1: PLAYER PHYSICS (Weeks 2-3: Data Types) ║
@@ -261,6 +261,35 @@ public class GameConfig extends BaseSettings {
     public void configurePlayer(entities.Player player) {
         // TODO: Use setters to set health and coins
         // You may notice the player's max health isn't high enough
+    }
+
+    /**
+     * WEEK 12 CHALLENGE: Implement the PowerUp class.
+     * Navigate to the PowerUp class and add the necessary code.
+     * Add your code to the apply method to give the player abilities.
+     */
+
+    /**
+     * WEEK 13 CHALLENGE: Fix the GameState class.
+     * Navigate to the GameState class and follow the instructions.
+     */
+
+    /**
+     * WEEK 14 CHALLENGE: Create a new enemy subclass.
+     * Review the Charger, and Flyer classes for inspiration.
+     * Make sure your new enemy inherits from the Enemy class.
+     * 
+     * Use the code below to create your new enemy:
+     * 
+     * public *your Enemy Subclass* createNewEnemy() {
+     * return new *your Enemy Subclass*(x, y, patrolLeft, patrolRight);
+     * }
+     * 
+     * (Recommended x, y, and patrol values are present but you can change those).
+     */
+
+    public Enemy createNewEnemy() {
+        return new Enemy(100, 440, 50, 250);
     }
 
     // Goal position (where the level ends)

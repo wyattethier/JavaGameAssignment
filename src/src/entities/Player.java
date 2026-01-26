@@ -24,6 +24,8 @@ public class Player {
     // Velocity
     public double velocityX;
     public double velocityY;
+    public double jumpMultiplier;
+    public double moveSpeedMultiplier;
 
     // Size
     private int width;
@@ -65,6 +67,8 @@ public class Player {
         this.height = config.playerHeight;
         this.velocityX = 0;
         this.velocityY = 0;
+        this.jumpMultiplier = 1;
+        this.moveSpeedMultiplier = 1;
         this.onGround = false;
         this.coyoteTimer = 0;
         this.health = 3;
@@ -122,9 +126,9 @@ public class Player {
     private void handleInput(InputHandler input) {
         // Horizontal movement
         if (input.isKeyPressed(KeyEvent.VK_LEFT) || input.isKeyPressed(KeyEvent.VK_A)) {
-            velocityX = -config.determineMoveSpeed();
+            velocityX = -config.determineMoveSpeed(moveSpeedMultiplier);
         } else if (input.isKeyPressed(KeyEvent.VK_RIGHT) || input.isKeyPressed(KeyEvent.VK_D)) {
-            velocityX = config.determineMoveSpeed();
+            velocityX = config.determineMoveSpeed(moveSpeedMultiplier);
         } else {
             velocityX = 0;
         }
@@ -134,7 +138,7 @@ public class Player {
                 || input.isKeyJustPressed(KeyEvent.VK_UP)) {
             if (onGround || coyoteTimer > 0) {
                 // Regular jump (includes coyote time window)
-                velocityY = -config.calculateJumpHeight(1.0);
+                velocityY = -config.calculateJumpHeight(jumpMultiplier);
                 onGround = false;
                 coyoteTimer = 0; // Consume the coyote time
             }
@@ -340,6 +344,22 @@ public class Player {
         return health > 0;
     }
 
+    public int getCoinTimer() {
+        return coinTimer;
+    }
+
+    public int getStamina() {
+        return stamina;
+    }
+
+    public double getJumpMultiplier() {
+        return jumpMultiplier;
+    }
+
+    public double getMoveSpeedMultiplier() {
+        return moveSpeedMultiplier;
+    }
+
     // Setters (for Week 11 encapsulation exercises)
     public void setHealth(int health) {
         this.health = Math.max(0, Math.min(health, maxHealth));
@@ -353,15 +373,15 @@ public class Player {
         this.maxHealth = Math.max(1, maxHealth);
     }
 
-    public int getCoinTimer() {
-        return coinTimer;
-    }
-
-    public int getStamina() {
-        return stamina;
-    }
-
     public void setStamina(int stamina) {
         this.stamina = Math.max(0, Math.min(stamina, 100));
+    }
+
+    public void setJumpMultiplier(double jumpMultiplier) {
+        this.jumpMultiplier = jumpMultiplier;
+    }
+
+    public void setMoveSpeedMultiplier(double moveSpeedMultiplier) {
+        this.moveSpeedMultiplier = moveSpeedMultiplier;
     }
 }

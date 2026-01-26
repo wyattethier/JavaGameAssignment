@@ -190,7 +190,7 @@ public class Game extends JPanel implements ActionListener {
         player.update(input, level.getPlatforms());
 
         // Update level (enemies, wall, etc.)
-        level.update();
+        level.update(player);
 
         // Update time bonus
         frameCounter++;
@@ -460,7 +460,8 @@ public class Game extends JPanel implements ActionListener {
         g.setFont(new Font("Courier New", Font.PLAIN, 11));
         g.setColor(new Color(80, 80, 80));
         g.drawString("jumpStrength: " + config.calculateJumpHeight(1.0), config.windowWidth - 150, 50);
-        g.drawString("moveSpeed: " + config.determineMoveSpeed(), config.windowWidth - 150, 65);
+        g.drawString("moveSpeed: " + config.determineMoveSpeed(player.getMoveSpeedMultiplier()),
+                config.windowWidth - 150, 65);
         g.drawString("gravity: " + config.gravity, config.windowWidth - 150, 80);
 
         // Controls hint

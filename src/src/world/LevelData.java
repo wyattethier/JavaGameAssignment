@@ -195,7 +195,7 @@ public class LevelData implements Constants {
         config.weekNumber = 4;
         config.part = 1;
         config.topic = "If-Statements (boolean)";
-        config.hint = "Hint: The goal is broken! Change goalEnabled to true in GameConfig.java";
+        config.hint = "Hint: The goal is broken! Fix the clicking condition in GameConfig.java!";
         config.nextPart = 0; // Single part level
 
         // Simple platform layout - easy to reach the goal
@@ -366,7 +366,7 @@ public class LevelData implements Constants {
         config.name = "Week 9: Enemy Parade";
         config.weekNumber = 9;
         config.topic = "Array Iteration";
-        config.hint = "Hint: Use loops to move the enemies out of your way!";
+        config.hint = "Hint: Use loops to create enemies to jump across the gap!";
 
         config.useWeek9Data = true;
         config.platformX = new int[] { 0, 750 };
@@ -432,7 +432,7 @@ public class LevelData implements Constants {
         config.name = "Week 12: Power-Up Factory";
         config.weekNumber = 12;
         config.topic = "Creating Classes";
-        config.hint = "Hint: Create the PowerUp class to survive the gauntlet!";
+        config.hint = "Hint: Edit the PowerUp class to grant the player temporary abilities to reach the flag!";
 
         config.platformX = new int[] { 50, 700 };
         config.platformY = new int[] { 500, 500 };
@@ -440,7 +440,7 @@ public class LevelData implements Constants {
 
         // Need powerups to reach the far side
         config.goalX = 720;
-        config.goalY = 425;
+        config.goalY = 50;
 
         return config;
     }
@@ -473,7 +473,7 @@ public class LevelData implements Constants {
         config.name = "Week 14: Enemy Evolution";
         config.weekNumber = 14;
         config.topic = "Inheritance";
-        config.hint = "Hint: Create Flyer and Charger classes to populate the level!";
+        config.hint = "Hint: Create a new enemy subclass to populate the level!";
 
         config.platformX = new int[] { 50, 300, 550 };
         config.platformY = new int[] { 480, 420, 360 };

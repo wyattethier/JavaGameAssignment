@@ -39,12 +39,12 @@ public class BaseSettings implements Constants {
      * Determine the current move speed.
      * Only uses the student-modified moveSpeed for the Week 3 challenge.
      */
-    public double determineMoveSpeed() {
+    public double determineMoveSpeed(double multiplier) {
         if (!(this instanceof GameConfig))
             return 3.0;
         GameConfig config = (GameConfig) this;
 
-        return (config.currentWeek == 3) ? config.moveSpeed : 3.0;
+        return ((config.currentWeek == 3) ? config.moveSpeed : 3.0) * multiplier;
     }
 
     /**

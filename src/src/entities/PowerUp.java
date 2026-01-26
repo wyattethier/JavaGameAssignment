@@ -31,9 +31,17 @@ public class PowerUp {
     /**
      * Update the power-up each frame.
      */
-    public void tick() {
+    public void tick(Player player) {
         if (collected && duration > 0) {
             duration--;
+        }
+        if (duration <= 0) {
+            if (type.equals("jump")) {
+                player.setJumpMultiplier(1);
+            }
+            if (type.equals("speed")) {
+                player.setMoveSpeedMultiplier(1);
+            }
         }
     }
 
@@ -42,7 +50,7 @@ public class PowerUp {
      */
     public void apply(Player player) {
         // TODO: Implement effects based on type
-        // if (type.equals("speed")) player.moveSpeed *= 1.5;
+        // Review the Player class for available methods
     }
 
     public boolean isExpired() {
