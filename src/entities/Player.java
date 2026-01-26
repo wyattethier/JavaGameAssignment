@@ -18,12 +18,14 @@ import world.Platform;
 public class Player {
 
     // Position (using doubles for smooth movement)
-    private double x;
-    private double y;
+    public double x;
+    public double y;
 
     // Velocity
-    private double velocityX;
-    private double velocityY;
+    public double velocityX;
+    public double velocityY;
+    public double jumpMultiplier;
+    public double moveSpeedMultiplier;
 
     // Size
     private int width;
@@ -31,14 +33,18 @@ public class Player {
 
     // State
     private boolean onGround;
-    private boolean hasDoubleJumped;
     private int health;
     private int maxHealth;
     private int coins;
+    private int stamina = 100; // Week 11: Objects & Classes
 
     // Coyote time - allows jumping shortly after leaving a platform
     private int coyoteTimer = 0;
     private final int COYOTE_TIME = 8; // frames of grace period after leaving ground
+    private int iFrameTimer = 0; // Week 7: Invincibility frames
+    private final int IFRAME_DURATION = 60; // 1 second of invincibility
+    private int coinTimer = 0;
+    private final int COIN_FRAMES = 15;
 
     // Reference to game config for physics values
     private GameConfig config;
@@ -61,8 +67,9 @@ public class Player {
         this.height = config.playerHeight;
         this.velocityX = 0;
         this.velocityY = 0;
+        this.jumpMultiplier = 1;
+        this.moveSpeedMultiplier = 1;
         this.onGround = false;
-        this.hasDoubleJumped = false;
         this.coyoteTimer = 0;
         this.health = 3;
         this.maxHealth = 3;
@@ -80,6 +87,16 @@ public class Player {
         // Update coyote timer (counts down when not on ground)
         if (!onGround && coyoteTimer > 0) {
             coyoteTimer--;
+        }
+
+        // Update invincibility timer
+        if (iFrameTimer > 0) {
+            iFrameTimer--;
+        }
+
+        // Update coin timer
+        if (coinTimer > 0) {
+            coinTimer--;
         }
 
         // Handle horizontal movement
@@ -109,9 +126,9 @@ public class Player {
     private void handleInput(InputHandler input) {
         // Horizontal movement
         if (input.isKeyPressed(KeyEvent.VK_LEFT) || input.isKeyPressed(KeyEvent.VK_A)) {
-            velocityX = -config.moveSpeed;
+            velocityX = -config.determineMoveSpeed(moveSpeedMultiplier);
         } else if (input.isKeyPressed(KeyEvent.VK_RIGHT) || input.isKeyPressed(KeyEvent.VK_D)) {
-            velocityX = config.moveSpeed;
+            velocityX = config.determineMoveSpeed(moveSpeedMultiplier);
         } else {
             velocityX = 0;
         }
@@ -121,14 +138,9 @@ public class Player {
                 || input.isKeyJustPressed(KeyEvent.VK_UP)) {
             if (onGround || coyoteTimer > 0) {
                 // Regular jump (includes coyote time window)
-                velocityY = -config.jumpStrength;
+                velocityY = -config.calculateJumpHeight(jumpMultiplier);
                 onGround = false;
                 coyoteTimer = 0; // Consume the coyote time
-                hasDoubleJumped = false;
-            } else if (config.canDoubleJump && !hasDoubleJumped) {
-                // Double jump (Week 4)
-                velocityY = -config.jumpStrength * 0.85;
-                hasDoubleJumped = true;
             }
         }
     }
@@ -182,7 +194,12 @@ public class Player {
                     velocityY = 0;
                     onGround = true;
                     coyoteTimer = COYOTE_TIME; // Reset coyote timer when landing
-                    hasDoubleJumped = false;
+
+                    // Support for moveable platforms (Week 11/12)
+                    if (platform.isMoveable()) {
+                        config.movePlatform(platform, -1);
+                        y = platform.getY() - height; // Snap to new position
+                    }
                 } else if (velocityY < 0) {
                     // Moving up, hit ceiling
                     y = platform.getY() + platform.getHeight();
@@ -200,10 +217,14 @@ public class Player {
      * @param amount Amount of damage to take
      */
     public void takeDamage(int amount) {
-        if (!config.invincible) {
+        // Only take damage if not in i-frames
+        if (iFrameTimer <= 0) {
             health -= amount;
             if (health < 0)
                 health = 0;
+
+            // Activate i-frames
+            iFrameTimer = IFRAME_DURATION;
         }
     }
 
@@ -222,6 +243,7 @@ public class Player {
      * Collect a coin.
      */
     public void collectCoin() {
+        coinTimer = COIN_FRAMES;
         coins++;
     }
 
@@ -229,7 +251,7 @@ public class Player {
      * Bounce the player upward (e.g., when stomping an enemy).
      */
     public void bounce() {
-        velocityY = -config.jumpStrength * 0.7;
+        velocityY = -config.calculateJumpHeight(0.7);
         onGround = false;
     }
 
@@ -243,7 +265,6 @@ public class Player {
         velocityY = 0;
         onGround = false;
         coyoteTimer = 0;
-        hasDoubleJumped = false;
     }
 
     /**
@@ -261,6 +282,11 @@ public class Player {
      * @param g The graphics context
      */
     public void draw(Graphics g) {
+        // Flickering effect during i-frames
+        if (iFrameTimer > 0 && (iFrameTimer / 5) % 2 == 0) {
+            return; // Skip drawing this frame to create flicker
+        }
+
         // Body
         g.setColor(color);
         g.fillRect((int) x, (int) y, width, height);
@@ -318,8 +344,44 @@ public class Player {
         return health > 0;
     }
 
+    public int getCoinTimer() {
+        return coinTimer;
+    }
+
+    public int getStamina() {
+        return stamina;
+    }
+
+    public double getJumpMultiplier() {
+        return jumpMultiplier;
+    }
+
+    public double getMoveSpeedMultiplier() {
+        return moveSpeedMultiplier;
+    }
+
     // Setters (for Week 11 encapsulation exercises)
     public void setHealth(int health) {
         this.health = Math.max(0, Math.min(health, maxHealth));
+    }
+
+    public void setCoins(int coins) {
+        this.coins = Math.max(0, coins);
+    }
+
+    public void setMaxHealth(int maxHealth) {
+        this.maxHealth = Math.max(1, maxHealth);
+    }
+
+    public void setStamina(int stamina) {
+        this.stamina = Math.max(0, Math.min(stamina, 100));
+    }
+
+    public void setJumpMultiplier(double jumpMultiplier) {
+        this.jumpMultiplier = jumpMultiplier;
+    }
+
+    public void setMoveSpeedMultiplier(double moveSpeedMultiplier) {
+        this.moveSpeedMultiplier = moveSpeedMultiplier;
     }
 }

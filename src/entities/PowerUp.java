@@ -51,6 +51,7 @@ public class PowerUp {
     public void apply(Player player) {
         // TODO: Implement effects based on type
         // Review the Player class for available methods
+
     }
 
     public boolean isExpired() {
