@@ -29,10 +29,6 @@ public class GameConfig extends BaseSettings {
     // ║ Change this to play different weeks' levels (3-14) ║
     // ╚═══════════════════════════════════════════════════════════════╝
 
-    // Which week's level do you want to play? (3-14)
-    // Week 3 = Data Types challenge (jump height + speed escape)
-    // Week 4 = Decisions (coming soon)
-    // ... more levels coming each week!
     public int currentWeek = 3;
 
     // ╔═══════════════════════════════════════════════════════════════╗
