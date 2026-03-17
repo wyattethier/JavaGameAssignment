@@ -23,19 +23,17 @@ import java.util.Scanner;
  */
 public class GameConfig extends BaseSettings {
 
-    // ╔═══════════════════════════════════════════════════════════════╗
-    // ║ LEVEL SELECTOR ║
-    // ╠═══════════════════════════════════════════════════════════════╣
-    // ║ Change this to play different weeks' levels (3-14) ║
-    // ╚═══════════════════════════════════════════════════════════════╝
+    /**
+     * Level Selector
+     * Change this to play different weeks' levels (3-14)
+     */
 
     public int currentWeek = 3;
 
-    // ╔═══════════════════════════════════════════════════════════════╗
-    // ║ SECTION 1: PLAYER PHYSICS (Weeks 2-3: Data Types) ║
-    // ╠═══════════════════════════════════════════════════════════════╣
-    // ║ Modify these values to change how the player moves and jumps ║
-    // ╚═══════════════════════════════════════════════════════════════╝
+    /**
+     * Player Physics
+     * Modify these values to change how the player moves and jumps
+     */
 
     // How high does the player jump?
     // This is the initial upward velocity when you press jump
@@ -55,11 +53,11 @@ public class GameConfig extends BaseSettings {
     public int playerWidth = 32;
     public int playerHeight = 48;
 
-    // ═══════════════════════════════════════════════════════════════
-    // WEEK 4 CHALLENGE: Fix the broken goal!
-    // Write an if-statement that enables the goal only after the
-    // button has been clicked enough times.
-    // ═══════════════════════════════════════════════════════════════
+    /**
+     * WEEK 4 CHALLENGE: Fix the broken goal!
+     * Write an if-statement that enables the goal only after the
+     * button has been clicked enough times.
+     */
 
     /**
      * This method is called every frame to check if the goal is fixed.
@@ -75,12 +73,11 @@ public class GameConfig extends BaseSettings {
         return false;
     }
 
-    // ╔═══════════════════════════════════════════════════════════════╗
-    // ║ SECTION 3: SPAWNING (Week 5: Loops) ║
-    // ╠═══════════════════════════════════════════════════════════════╣
-    // ║ Change these to control how many things appear in the level ║
-    // ║ These values are used in for-loops to spawn objects ║
-    // ╚═══════════════════════════════════════════════════════════════╝
+    /**
+     * SPAWNING
+     * Change these to control how many things appear in the level
+     * These values are used in for-loops to spawn objects
+     */
 
     // How many extra platforms appear in the level? (Try 0-10)
     public int extraPlatformCount = 3;
@@ -91,12 +88,12 @@ public class GameConfig extends BaseSettings {
     // How many coins to collect? (Try 5-20)
     public int coinCount = 10;
 
-    // ═══════════════════════════════════════════════════════════════
-    // WEEK 5 CHALLENGE: Build the Bridge!
-    // The bridge has NUM_BRIDGE_TILES tiles, but they are all inactive.
-    // Write a for-loop that activates them all by setting each element
-    // in the array to true.
-    // ═══════════════════════════════════════════════════════════════
+    /**
+     * WEEK 5 CHALLENGE: Build the Bridge!
+     * The bridge has NUM_BRIDGE_TILES tiles, but they are all inactive.
+     * Write a for-loop that activates them all by setting each element
+     * in the array to true.
+     */
 
     /**
      * This method is called once to set up the bridge.
@@ -110,12 +107,11 @@ public class GameConfig extends BaseSettings {
         // For now, the bridge remains broken (all tiles are false)
     }
 
-    // ╔═══════════════════════════════════════════════════════════════╗
-    // ║ SECTION 4: LEVEL LAYOUT (Weeks 8-9: Arrays) ║
-    // ╠═══════════════════════════════════════════════════════════════╣
-    // ║ Arrays that define where things are placed in the level ║
-    // ║ Each index (0, 1, 2...) is a different platform or enemy ║
-    // ╚═══════════════════════════════════════════════════════════════╝
+    /**
+     * LEVEL LAYOUT
+     * Arrays that define where things are placed in the level
+     * Each index (0, 1, 2...) is a different platform or enemy
+     */
 
     // Platform Y positions (height from top of screen)
     // Lower numbers = higher on screen
@@ -138,11 +134,6 @@ public class GameConfig extends BaseSettings {
 
     // Enemy Y positions (what platform height they're on)
     public int[] enemyY = { 402, 302 };
-
-    // ═══════════════════════════════════════════════════════════════
-    // SECTION 5: CHALLENGES (Weeks 6-14)
-    // Write your code in the methods below!
-    // ═══════════════════════════════════════════════════════════════
 
     /**
      * WEEK 6 CHALLENGE: Activate the Jump Pad!
@@ -179,12 +170,6 @@ public class GameConfig extends BaseSettings {
         return 3;
     }
 
-    // ╔═══════════════════════════════════════════════════════════════╗
-    // ║ SECTION 6: ADVANCED LAYOUTS (Weeks 8-9) ║
-    // ╠═══════════════════════════════════════════════════════════════╣
-    // ║ These arrays are used for the Week 8 & 9 challenges ║
-    // ╚═══════════════════════════════════════════════════════════════╝
-
     /**
      * WEEK 8 CHALLENGE:
      * You need to use the movePlatform method to raise the player up to reach the
@@ -218,11 +203,6 @@ public class GameConfig extends BaseSettings {
         return null;
     }
 
-    // ╔═══════════════════════════════════════════════════════════════╗
-    // ║ SECTION 7: OBJECTS & CLASSES (Weeks 11-14) ║
-    // ╠═══════════════════════════════════════════════════════════════╣
-    // ║ Challenges for the final weeks of the course ║
-    // ╚═══════════════════════════════════════════════════════════════╝
     /**
      * WEEK 10 CHALLENGE: Load level platforms from a file.
      * Review level10.txt and write the method accordingly.
