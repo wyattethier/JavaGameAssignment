@@ -1,5 +1,6 @@
 package interfaces;
 
+// Constants that students should not modify
 public interface Constants {
     int REQUIRED_BUTTON_CLICKS = 5;
     int NUM_BRIDGE_TILES = 6;

@@ -22,13 +22,6 @@ import world.LevelData;
 
 /**
  * Main game panel that handles the game loop, rendering, and game state.
- *
- * Students: This class orchestrates everything. You'll explore it in Week 11.
- *
- * ═══════════════════════════════════════════════════════════════════════════
- * GAME ENGINE - You can read this code, but be careful about modifications!
- * Understanding this code will help you in later weeks.
- * ═══════════════════════════════════════════════════════════════════════════
  */
 public class Game extends JPanel implements ActionListener {
 
